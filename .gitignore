@@ -1,0 +1,33 @@
+node_modules/
+dist/
+dist-ssr/
+build/
+coverage/
+*.log
+npm-debug.log*
+
+.env
+.env.*
+!.env.example
+
+# runtime data & uploads
+backend/data/
+database/*.db
+database/*.db-shm
+database/*.db-wal
+uploads/
+backend/uploads/
+frontend/public/uploads/
+*.sqlite
+*.sqlite3
+
+# launcher runtime artifacts
+.cloudflared-tunnel.log
+.cloudflared-tunnel.err.log
+vite.log
+
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
