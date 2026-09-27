@@ -89,7 +89,9 @@ export function createApp(): express.Express {
 }
 
 // ── standalone server bootstrap (not run under vitest) ──────────────
-if (process.env.VITEST !== 'true' && process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('index.ts')) {
+const scriptPath = process.argv[1] ? process.argv[1].replace(/\\/g, '/') : '';
+const isDirectRun = scriptPath.endsWith('src/index.ts') || scriptPath.endsWith('dist/index.js');
+if (process.env.VITEST !== 'true' && isDirectRun) {
   fs.mkdirSync(config.uploadDir, { recursive: true });
   runMigrations();
   const db = getDb(); // open early to fail fast
