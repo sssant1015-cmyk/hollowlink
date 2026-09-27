@@ -90,6 +90,9 @@ export function Layout() {
             <button className="btn btn-ghost btn-sm" aria-label="Notifications" onClick={() => navigate('/app/notifications')}>
               ◔{unread > 0 && <span className="nav-badge" style={{ marginLeft: 6 }}>{unread}</span>}
             </button>
+            <button className="btn btn-ghost btn-sm" aria-label="Settings" onClick={() => navigate('/app/settings')}>
+              ⚙
+            </button>
             <button
               className="btn btn-ghost"
               style={{ padding: 2 }}
@@ -105,7 +108,7 @@ export function Layout() {
 
       <nav className="bottom-nav" aria-label="Primary mobile">
         <div className="bottom-nav-inner">
-          {NAV.slice(0, 5).map((item) => (
+          {NAV.slice(0, 4).map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -117,6 +120,46 @@ export function Layout() {
               <span>{item.label}</span>
             </NavLink>
           ))}
+          <NavLink
+            to="/app/notifications"
+            className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
+            aria-label="Notifications"
+          >
+            <span aria-hidden style={{ fontSize: 18, position: 'relative' }}>
+              ◔
+              {unread > 0 && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: -4,
+                    right: -8,
+                    background: 'var(--purple)',
+                    color: '#fff',
+                    borderRadius: 8,
+                    minWidth: 14,
+                    height: 14,
+                    fontSize: 9,
+                    fontWeight: 700,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0 3px',
+                  }}
+                >
+                  {unread > 9 ? '9+' : unread}
+                </span>
+              )}
+            </span>
+            <span>Alerts</span>
+          </NavLink>
+          <NavLink
+            to="/app/profile"
+            className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
+            aria-label="Profile and settings"
+          >
+            <span aria-hidden style={{ fontSize: 18 }}>◎</span>
+            <span>Me</span>
+          </NavLink>
         </div>
       </nav>
     </div>
