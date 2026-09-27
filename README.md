@@ -16,6 +16,8 @@ HollowLink is a private social application for friend groups — a digital headq
 - 🔔 **Notifications** — friend requests, reactions, comments, announcements, event changes
 - 🛡️ **Moderation** — reporting with status workflow, group management tools
 - 🔍 **Global search** — users, groups, and your authorized content only
+- 🎨 **Customization engine** — light/dark/system, 8 preset themes, custom colors, fonts, text size, UI scale, radius, animation & effect levels, layout options, personal presets
+- 🧩 **Extension framework** — sandboxed extensions with validated manifests, permission consent, per-user enable/disable and settings (demo extensions included; future Zoom/games/music plug in here)
 
 ## Tech Stack
 
@@ -149,6 +151,7 @@ See `docs/security.md` for the full threat model.
 - [API reference](docs/api.md)
 - [Security](docs/security.md)
 - [Development guide](docs/development.md)
+- [Customization & Extensions](docs/customization-extensions.md)
 - [Roadmap](docs/roadmap.md)
 
 ## License

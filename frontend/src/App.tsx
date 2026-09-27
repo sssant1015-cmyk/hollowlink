@@ -2,6 +2,8 @@ import { lazy, Suspense, type ReactNode } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './api/AuthContext';
 import { ToastProvider } from './utils/toast';
+import { CustomizationProvider } from './customization/CustomizationProvider';
+import { ExtensionsProvider } from './extensions/ExtensionsProvider';
 import { Layout } from './components/layout/Layout';
 import { Spinner } from './components/ui/Ui';
 import { LandingPage } from './pages/LandingPage';
@@ -20,6 +22,9 @@ const NotificationsPage = lazy(() => import('./pages/NotificationsPage').then((m
 const ProfilePage = lazy(() => import('./pages/ProfilePage').then((m) => ({ default: m.ProfilePage })));
 const SettingsPage = lazy(() => import('./pages/SettingsPage').then((m) => ({ default: m.SettingsPage })));
 const SearchPage = lazy(() => import('./pages/SearchPage').then((m) => ({ default: m.SearchPage })));
+const ExtensionsPage = lazy(() => import('./pages/ExtensionsPage').then((m) => ({ default: m.ExtensionsPage })));
+const AppearancePage = lazy(() => import('./pages/AppearancePage').then((m) => ({ default: m.AppearancePage })));
+const ExtensionPanelRoute = lazy(() => import('./pages/ExtensionPanelRoute').then((m) => ({ default: m.ExtensionPanelRoute })));
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
@@ -45,7 +50,9 @@ function RedirectIfAuthed({ children }: { children: ReactNode }) {
 export default function App() {
   return (
     <BrowserRouter>
+      <CustomizationProvider>
       <AuthProvider>
+        <ExtensionsProvider>
         <ToastProvider>
           <Suspense
             fallback={
@@ -79,13 +86,18 @@ export default function App() {
                 <Route path="profile" element={<ProfilePage />} />
                 <Route path="profile/:id" element={<ProfilePage />} />
                 <Route path="settings" element={<SettingsPage />} />
+                <Route path="settings/appearance" element={<AppearancePage />} />
+                <Route path="extensions" element={<ExtensionsPage />} />
+                <Route path="extensions/:extensionId" element={<ExtensionPanelRoute />} />
                 <Route path="search" element={<SearchPage />} />
               </Route>
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
         </ToastProvider>
+        </ExtensionsProvider>
       </AuthProvider>
+      </CustomizationProvider>
     </BrowserRouter>
   );
 }

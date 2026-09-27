@@ -1,0 +1,113 @@
+/* ════════════════════════════════════════════════════════════════
+   HollowLink semantic design tokens (customization engine output)
+   The CustomizationProvider writes these at runtime on :root.
+   Defaults below mirror Hollow Dark so first paint is correct.
+   ════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* surfaces + text */
+  --hl-bg: var(--bg);
+  --hl-surface: var(--bg-surface);
+  --hl-surface-2: var(--bg-raised);
+  --hl-text: var(--text);
+  --hl-text-muted: var(--text-dim);
+  --hl-primary: var(--purple);
+  --hl-secondary: var(--cyan);
+  --hl-border: var(--border);
+  --hl-shadow: var(--shadow);
+
+  /* typography scale */
+  --hl-font-family: var(--font);
+  --hl-font-xs: 12px;
+  --hl-font-sm: 13px;
+  --hl-font-md: 15px;
+  --hl-font-lg: 17px;
+  --hl-font-xl: 22px;
+  --hl-font-2xl: 28px;
+
+  /* radius scale */
+  --hl-radius-sm: 8px;
+  --hl-radius-md: 14px;
+  --hl-radius-lg: 20px;
+  --hl-radius-xl: 26px;
+
+  /* spacing / scale */
+  --hl-space-unit: 1;
+  --hl-pad-card: 18px;
+  --hl-pad-item: 12px;
+
+  /* motion */
+  --hl-transition: var(--anim, 200ms);
+  --hl-transition-fast: var(--anim-fast, 120ms);
+
+  /* effects levels (data-attributes gate the heavy ones) */
+  --hl-glass-blur: 12px;
+  --hl-gradient-opacity: 1;
+}
+
+/* ── effect levels ─────────────────────────────────────────── */
+
+:root[data-glass='off'] { --hl-glass-blur: 0px; }
+:root[data-glass='subtle'] { --hl-glass-blur: 6px; }
+
+:root[data-gradients='off'] { --hl-gradient-opacity: 0; }
+:root[data-gradients='subtle'] { --hl-gradient-opacity: 0.45; }
+
+:root[data-glow='off'] { --glow: none; --purple-glow: transparent; }
+:root[data-glow='subtle'] { --glow: 0 0 10px var(--purple-glow); }
+
+/* ── animation levels ──────────────────────────────────────── */
+
+:root[data-anim='none'] *,
+:root[data-anim='none'] *::before,
+:root[data-anim='none'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+:root[data-anim='reduced'] * {
+  transition-duration: calc(var(--hl-transition-fast) * 0.6) !important;
+}
+
+/* OS-level reduced motion always wins. */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-anim='normal'] *,
+  :root[data-anim='high'] *,
+  :root[data-anim='reduced'] * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── high contrast mode ────────────────────────────────────── */
+
+:root[data-contrast='high'] {
+  --border: rgba(255, 255, 255, 0.35) !important;
+  --border-strong: rgba(255, 255, 255, 0.55) !important;
+  --text-dim: var(--text) !important;
+  --text-faint: var(--text) !important;
+}
+
+/* ── density (feed + chat) ─────────────────────────────────── */
+
+:root[data-density='compact'] .post-card { padding: calc(var(--hl-pad-card) * 0.7); }
+:root[data-density='compact'] .post-content { font-size: var(--hl-font-sm); }
+
+:root[data-chat='compact'] .chat-bubble { padding: 5px 10px; }
+:root[data-chat='compact'] .chat-messages { gap: 2px; }
+
+/* body background honors gradient intensity */
+body {
+  background:
+    linear-gradient(rgba(168, 85, 247, 0.09), rgba(168, 85, 247, 0)),
+    linear-gradient(rgba(34, 211, 238, 0.06), rgba(34, 211, 238, 0)),
+    var(--hl-bg);
+  background-attachment: fixed;
+  background-image:
+    radial-gradient(1200px 800px at 85% -10%, rgba(168, 85, 247, calc(0.09 * var(--hl-gradient-opacity))), transparent 60%),
+    radial-gradient(900px 700px at -10% 110%, rgba(34, 211, 238, calc(0.06 * var(--hl-gradient-opacity))), transparent 60%);
+  background-color: var(--hl-bg);
+  font-family: var(--hl-font-family);
+  font-size: var(--hl-font-md);
+}

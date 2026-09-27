@@ -23,6 +23,9 @@ import eventsRoutes from './routes/events.routes.js';
 import notificationsRoutes from './routes/notifications.routes.js';
 import searchRoutes from './routes/search.routes.js';
 import moderationRoutes from './routes/moderation.routes.js';
+import preferencesRoutes from './routes/preferences.routes.js';
+import extensionsRoutes from './routes/extensions.routes.js';
+import { registerBuiltinExtensions } from './extensions/builtin.js';
 
 export function createApp(): express.Express {
   const app = express();
@@ -76,6 +79,8 @@ export function createApp(): express.Express {
   api.use('/notifications', notificationsRoutes);
   api.use('/search', searchRoutes);
   api.use('/reports', moderationRoutes);
+  api.use('/preferences', preferencesRoutes);
+  api.use('/extensions', extensionsRoutes);
   app.use('/api', api);
 
   app.use(notFoundHandler() as never);
@@ -87,7 +92,8 @@ export function createApp(): express.Express {
 if (process.env.VITEST !== 'true' && process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('index.ts')) {
   fs.mkdirSync(config.uploadDir, { recursive: true });
   runMigrations();
-  getDb(); // open early to fail fast
+  const db = getDb(); // open early to fail fast
+  registerBuiltinExtensions(db); // seed demo extension manifests
 
   const app = createApp();
   const server = http.createServer(app);

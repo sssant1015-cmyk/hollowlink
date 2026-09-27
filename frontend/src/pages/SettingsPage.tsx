@@ -114,6 +114,14 @@ export function SettingsPage() {
     <div className="page" style={{ maxWidth: 640 }}>
       <h1 style={{ fontSize: 24 }} className="mb-3">Settings</h1>
 
+      <section className="card mb-3" aria-label="Appearance shortcuts">
+        <h2 className="card-title">Appearance</h2>
+        <p className="small muted mb-2">Themes, fonts, text size, animations and effects live on their own page.</p>
+        <button className="btn btn-primary btn-sm" onClick={() => navigate('/app/settings/appearance')}>
+          Open appearance settings
+        </button>
+      </section>
+
       <section className="card mb-3" aria-label="Account">
         <h2 className="card-title">Account</h2>
         <div className="list-row" style={{ padding: '8px 0' }}>

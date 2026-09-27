@@ -1,13 +1,17 @@
 import { getDb, closeDb } from './connection.js';
 import { transaction } from '../lib/crypto.js';
 import { up as m0001 } from './migrations/0001_init.js';
+import { up as m0002 } from './migrations/0002_preferences_extensions.js';
 
 interface Migration {
   id: string;
   up: (db: import('./connection.js').DB) => void;
 }
 
-const MIGRATIONS: Migration[] = [{ id: '0001_init', up: m0001 }];
+const MIGRATIONS: Migration[] = [
+  { id: '0001_init', up: m0001 },
+  { id: '0002_preferences_extensions', up: m0002 },
+];
 
 export function runMigrations(database: import('./connection.js').DB = getDb()): void {
   database.exec(`

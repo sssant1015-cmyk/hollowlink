@@ -16,6 +16,7 @@ const NAV = [
 
 const NAV_FOOTER = [
   { to: '/app/notifications', label: 'Notifications', icon: '◔' },
+  { to: '/app/extensions', label: 'Extensions', icon: '⌬' },
   { to: '/app/profile', label: 'Profile', icon: '◎' },
   { to: '/app/settings', label: 'Settings', icon: '⚙' },
 ];
